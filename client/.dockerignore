@@ -1,0 +1,5 @@
+.*
+build.sh
+Dockerfile*
+push.sh
+README.md
