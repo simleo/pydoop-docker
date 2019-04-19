@@ -3,8 +3,8 @@ ARG python_version=3.6
 
 FROM crs4/pydoop-base:${hadoop_version}-${python_version}
 
-# Inkscape installs ImageMagick as a dep
 RUN apt-get -y update && apt-get -y install --no-install-recommends \
+      imagemagick \
       inkscape \
     && apt clean && rm -rf /var/lib/apt-lists/* \
     && ${PYTHON} -m pip install --no-cache-dir sphinx
