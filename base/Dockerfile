@@ -10,12 +10,13 @@ ARG python_version
 ENV PYTHON=python${python_version}
 RUN v=$([ ${python_version%%.*} -eq 3 ] && echo 3 || echo) \
     && apt-get -y update && apt-get -y install --no-install-recommends \
+      build-essential \
       openjdk-8-jdk \
       python${python_version}-dev \
       python${v}-pip \
       zip \
     && apt clean && rm -rf /var/lib/apt-lists/* \
-    && ${PYTHON} -m pip install --no-cache-dir --upgrade pip \
+    && ${PYTHON} -m pip install --no-cache-dir --upgrade pip setuptools \
     && mkdir -p "${maven_home}" \
     && wget -q -O - "ftp://ftp.mirrorservice.org/sites/ftp.apache.org/maven/maven-3/${maven_version}/binaries/apache-maven-${maven_version}-bin.tar.gz" | tar -xz --strip 1 -C "${maven_home}" \
     && echo "export M2_HOME=\"${maven_home}\"" >> /etc/profile.d/maven.sh \
