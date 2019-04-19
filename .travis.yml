@@ -5,11 +5,11 @@ cache: pip
 matrix:
   include:
   - python: "2.7"
-    env: HADOOP_VERSION=3.2.0 LATEST=true
+    env: HADOOP_VERSION=3.2.0
   - python: "3.6"
     env: HADOOP_VERSION=2.9.2
   - python: "3.6"
-    env: HADOOP_VERSION=3.2.0
+    env: HADOOP_VERSION=3.2.0 LATEST=true
   - python: "3.7"
     env: HADOOP_VERSION=3.2.0
     dist: xenial
@@ -18,7 +18,7 @@ sudo: required
 
 services: docker
 
-install: bash base/build.sh
+install: bash build.sh
 
 script:
  - docker run --rm --name pydoop-base -d crs4/pydoop-base:${HADOOP_VERSION}-${TRAVIS_PYTHON_VERSION}
@@ -27,12 +27,15 @@ script:
  - docker exec pydoop-base mvn -v
  - docker exec pydoop-base jps
  - docker stop pydoop-base
+ - docker run --rm --name pydoop-client-base -d crs4/pydoop-client-base:${HADOOP_VERSION}-${TRAVIS_PYTHON_VERSION}
+ - "docker exec pydoop-client-base bash -c '${PYTHON} -V'"
+ - docker stop pydoop-client-base
  - docker run --rm crs4/pydoop-docs-base:${HADOOP_VERSION}-${TRAVIS_PYTHON_VERSION} inkscape -V
  - docker run --rm crs4/pydoop-docs-base:${HADOOP_VERSION}-${TRAVIS_PYTHON_VERSION} sphinx-build --version
 
 deploy:
   provider: script
-  script: bash base/push.sh
+  script: bash push.sh
   on:
     repo: crs4/pydoop-docker
     branch: master
