@@ -18,7 +18,7 @@ RUN v=$([ ${python_version%%.*} -eq 3 ] && echo 3 || echo) \
     && apt clean && rm -rf /var/lib/apt-lists/* \
     && ${PYTHON} -m pip install --no-cache-dir --upgrade pip setuptools \
     && mkdir -p "${maven_home}" \
-    && wget -q -O - "ftp://ftp.mirrorservice.org/sites/ftp.apache.org/maven/maven-3/${maven_version}/binaries/apache-maven-${maven_version}-bin.tar.gz" | tar -xz --strip 1 -C "${maven_home}" \
+    && wget -q -O - "http://www-eu.apache.org/dist/maven/maven-3/${maven_version}/binaries/apache-maven-${maven_version}-bin.tar.gz" | tar -xz --strip 1 -C "${maven_home}" \
     && echo "export M2_HOME=\"${maven_home}\"" >> /etc/profile.d/maven.sh \
     && echo "export M2=\"\${M2_HOME}/bin\"" >> /etc/profile.d/maven.sh \
     && echo "export PATH=\"\${M2}:\${PATH}\"" >> /etc/profile.d/maven.sh
