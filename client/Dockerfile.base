@@ -6,11 +6,12 @@ ARG python_version
 ENV PYTHON=python${python_version}
 RUN v=$([ ${python_version%%.*} -eq 3 ] && echo 3 || echo) \
     && apt-get -y update && apt-get -y install --no-install-recommends \
+      build-essential \
       openjdk-8-jdk \
       python${python_version}-dev \
       python${v}-pip \
     && apt clean && rm -rf /var/lib/apt-lists/* \
-    && ${PYTHON} -m pip install --no-cache-dir --upgrade pip
+    && ${PYTHON} -m pip install --no-cache-dir --upgrade pip setuptools
 ENV HADOOP_HOME=/opt/hadoop
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
