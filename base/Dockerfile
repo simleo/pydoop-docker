@@ -3,7 +3,7 @@ ARG python_version=3.6
 ARG maven_home=/opt/maven
 ARG maven_version=3.6.0
 
-FROM crs4/hadoop:${hadoop_version}-ubuntu
+FROM crs4/hadoop:${hadoop_version}-v0
 ARG maven_home
 ARG maven_version
 ARG python_version
